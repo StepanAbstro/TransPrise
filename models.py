@@ -41,7 +41,7 @@ def regression_model(data_shape):
     :param data_shape: input data shape (length and layers)
     :return: models for regression
     """
-    print(data_shape)
+
     regr_mod = Sequential()
     regr_mod.add(l.BatchNormalization(axis=1, input_shape=data_shape))
     regr_mod.add(l.Conv1D(16, 32, padding='same', activation='elu'))

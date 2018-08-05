@@ -41,7 +41,7 @@ def regression_model(data_shape):
     :param data_shape: input data shape (length and layers)
     :return: models for regression
     """
-
+    print(data_shape)
     regr_mod = Sequential()
     regr_mod.add(l.BatchNormalization(axis=1, input_shape=data_shape))
     regr_mod.add(l.Conv1D(16, 32, padding='same', activation='elu'))
@@ -57,7 +57,7 @@ def regression_model(data_shape):
     regr_mod.add(l.Dropout(0.5))
     regr_mod.add(l.Dense(1, activation='linear'))
 
-    regr_mod.compile(loss='mean_squared_error', optimizer='adam')
+    regr_mod.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_absolute_error'])
 
     return regr_mod
 

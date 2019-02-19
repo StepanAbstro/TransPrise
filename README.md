@@ -7,7 +7,7 @@ Paper will be published soon.
 * ./imgs/ contains metric plots and filter visualization
 * ./models/ contains our models for classification and regression problems
 ## Training and predicting pipelines
-*./Osativa_pipeline.py is script for dataset making and model training
-*./workflow.py is script for prediction on big sequences
+* ./Osativa_pipeline.py is script for dataset making and model training
+* ./workflow.py is script for prediction on big sequences
 ## Contact us
 s.pachganov@yandex.ru

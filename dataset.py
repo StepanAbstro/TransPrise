@@ -1,6 +1,8 @@
 """
 Functions for making dataset for train and test model
 """
+
+
 import numpy as np
 import features as ft
 from random import randint
@@ -26,6 +28,30 @@ def tss_read(path, sep=','):
     tss_array = sorted(tss_array, key=lambda x: (int(x[0][3:]), x[3]))
     return tss_array
 
+
+def to_strings(numpy_matrix, path):
+    """
+    
+    :param numpy_matrix: matrix to convert
+    :param path: path to new_file
+    :param letters_order: 'ACGT' or 'ATCG'
+    :return: fasta file with strings
+    """
+    
+    n, l, c = numpy_matrix.shape
+    charar = np.chararray((n, l), unicode=True)
+    charar[:] = 'N'
+    
+    charar[np.where(numpy_matrix[:, :, 0] == 1)] = 'A'
+    charar[np.where(numpy_matrix[:, :, 1] == 1)] = 'C'
+    charar[np.where(numpy_matrix[:, :, 2] == 1)] = 'G'
+    charar[np.where(numpy_matrix[:, :, 3] == 1)] = 'T'
+    
+    with open(path+'.fa', 'w') as ouf:
+        for i in range(n):
+            ouf.write('>' + str(i+1) + '\n')
+            ouf.write(''.join(charar[i])+'\n')
+    
 
 def seqs_from_chr(tss_array, seqs_with_tss, gene, chromosome, chromosome_name, nucleotides):
     tss_examples = len(tss_array)
@@ -271,9 +297,9 @@ def class_assemble(sequences, beyond_genes_seqs, tss_pos, examples, length, min_
     :return: return numpy dataset and answers for work with classification models, 4th part of examples will be from 
     beyond genes space
     """
-
     dataset = np.zeros((examples, 4 + len(features) + len(skews) + tata, length))
     answers = np.array([i for i in [1, 0] for j in range(examples // 2)])
+    positions = np.zeros(examples)
 
     print('Classification dataset assembler works...', end=' ')
     print('Features: A, C, G, T,', ' '.join(features), end=' ')
@@ -296,7 +322,7 @@ def class_assemble(sequences, beyond_genes_seqs, tss_pos, examples, length, min_
         gene = randint(0, all_tss - 1) * 2 + 1
         start_pos = randint(min_start_pos, max_start_pos)
         end_pos = start_pos + length
-
+        positions[example] = middle - start_pos
         while sum(map(int, tss_data[gene].rstrip().split())) > 1:
             gene = randint(0, all_tss - 1) * 2 + 1
 
@@ -304,7 +330,7 @@ def class_assemble(sequences, beyond_genes_seqs, tss_pos, examples, length, min_
 
     for example in range(examples // 2, examples // 4 * 3):
         gene = randint(0, all_beyond - 1) * 2 + 1
-        dataset[example] = features_work(beyond_genes_data[gene].rstrip(), features=features, skews=skews, tata=tata)
+        dataset[example] = features_work(beyond_genes_data[gene][:length], features=features, skews=skews, tata=tata)
 
     for example in range(examples // 4 * 3, examples):
         gene = randint(0, all_tss - 1) * 2 + 1
@@ -321,8 +347,11 @@ def class_assemble(sequences, beyond_genes_seqs, tss_pos, examples, length, min_
             end_pos = start_pos + length
             dataset[example] = features_work(seq_data[gene][start_pos:end_pos], features=features,
                                              skews=skews, tata=tata)
-
-    return shuffle_arrays(np.rollaxis(dataset, 1, 3), answers)
+    
+    s = np.arange(answers.shape[0])
+    np.random.shuffle(s)
+    
+    return np.rollaxis(dataset, 1, 3)[s], answers[s], positions[s]
 
 
 def beyond_genes(tss_array, dna_seq, split, examples_train, examples_test, new_path='./data/', nucleotides=512,

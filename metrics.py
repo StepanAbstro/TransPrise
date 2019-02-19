@@ -110,7 +110,7 @@ def rmse(predictions, true):
     :return: rooted mean squared error or mean absolute error
     """
 
-    return np.mean(((predictions.squeeze() - test_answers) ** 2) ** 0.5)
+    return np.mean(((predictions.squeeze() - true) ** 2) ** 0.5)
 
 
 def all_class_metrics(predictions, true):

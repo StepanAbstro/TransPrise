@@ -1,18 +1,10 @@
 
-.idea/workspace.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/TransPrise.iml
-.idea/vcs.xml
-.ipynb_checkpoints/Untitled-checkpoint.ipynb
-.vscode/settings.json
-__pycache__/dataset.cpython-36.pyc
-__pycache__/features.cpython-36.pyc
-__pycache__/metrics.cpython-36.pyc
-__pycache__/models.cpython-36.pyc
+.idea/
+.ipynb_checkpoints/
+.vscode/
+__pycache__/
 *.npy
 .DS_Store
 data/all.con
 *.fasta
-.DS_Store
 test.py

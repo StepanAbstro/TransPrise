@@ -15,3 +15,4 @@ __pycache__/models.cpython-36.pyc
 data/all.con
 *.fasta
 .DS_Store
+test.py

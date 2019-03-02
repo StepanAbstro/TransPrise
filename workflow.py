@@ -111,7 +111,7 @@ for loc in locs_names:
     current_score = thres
     for ind, val in enumerate(results):
         current_delta = abs(val[0] - current_pos)
-        if current_delta > 100 and current_score < 500 or ind == max_len:
+        if current_delta > 100 and current_score < thres or ind == max_len:
             output.write('%s %s %s \n' % (loc[0], current_pos, current_score))
             current_pos, current_score = val[0], val[1]
         elif current_delta > 100:

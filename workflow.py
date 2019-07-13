@@ -35,8 +35,9 @@ def to_matrix(seq):
 
 
 def batch(matrix):
-    indexes = np.lib.stride_tricks.as_strided(np.arange(matrix.shape[0]),\
-     shape=((matrix.shape[0]-512)//4+1, 512), strides=(16, 4))
+    count = (matrix.shape[0]-512)//4+1
+    indexes, _ = np.meshgrid(np.arange(512), np.arange(count))
+    indexes = indexes + np.expand_dims(np.linspace(0, 4*(count-1), count), axis=1).astype(np.int32)
     return matrix[indexes]
 
 
@@ -68,7 +69,7 @@ def analysis(seq, pos, thres):
 
 
 path = input('Path to file: ')
-thres = int(input('Input threshold for L1Norm: '))
+thres = int(input('Input threshold for L1Norm: ')) # default 100
 output = open('./output.txt', 'w')
 output.write('loc pos similarity \n')
 

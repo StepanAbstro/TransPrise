@@ -1,6 +1,5 @@
 # TransPrise
-Approach for prediction of eukaryotic transcription start sites.
-Paper will be published soon.
+A deep learning approach for precise prediction of eukaryotic transcription start sites. Our approach offers significant improvement over existing promoter prediction methods. We provide the full basis for the comparison and encourage users to freely access our computational method to facilitate and streamline their own analyses
 
 ## Folders
 * ./data/ contains some data files. TSS_MSU.txt was used for TSS sequence taking. Rice genome can be downloaded from MSU rice experiment official page

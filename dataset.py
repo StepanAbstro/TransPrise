@@ -232,7 +232,7 @@ def split_data(tss_array, split=0.1):
     return splitted
 
 
-def regr_assemble(sequences, tss_pos, examples, length, min_pos, max_pos, features=[], skews=[], tata=True):
+def regr_assemble(sequences, tss_pos, examples, length, min_pos, max_pos, features=[], skews=[], tata=False):
     """
     
     :param sequences: path to file with seq data (sequences.fasta)
@@ -281,7 +281,7 @@ def regr_assemble(sequences, tss_pos, examples, length, min_pos, max_pos, featur
 
 
 def class_assemble(sequences, beyond_genes_seqs, tss_pos, examples, length, min_pos, max_pos, features=[], skews=[],
-                   tata=True):
+                   tata=False):
     """
     
     :param sequences: path to file with seq data (sequences.fa)
@@ -350,8 +350,8 @@ def class_assemble(sequences, beyond_genes_seqs, tss_pos, examples, length, min_
     
     s = np.arange(answers.shape[0])
     np.random.shuffle(s)
-    
-    return np.rollaxis(dataset, 1, 3)[s], answers[s], positions[s]
+
+    return np.rollaxis(dataset, 1, 3)[s], answers[s]
 
 
 def beyond_genes(tss_array, dna_seq, split, examples_train, examples_test, new_path='./data/', nucleotides=512,
@@ -507,7 +507,7 @@ def beyond_genes(tss_array, dna_seq, split, examples_train, examples_test, new_p
     print('Beyond genes space data is ready')
 
 
-def features_work(seq, features=[], skews=[], tata=True):
+def features_work(seq, features=[], skews=[], tata=False):
     example_matrix = np.zeros((4 + len(features) + len(skews) + tata, len(seq)))
 
     example_matrix[:4] = ft.nuc_to_arr(seq)

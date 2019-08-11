@@ -91,11 +91,11 @@ def roc_auc(predictions, true):
     return fpr, tpr, auc_score
 
 
-def mse(predictions, true):
+def mse(predictions, test_answers):
     """
     
     :param predictions: predicted values
-    :param true: real values
+    :param test_answers: real values
     :return: mean squared error
     """
 

@@ -8,3 +8,4 @@ __pycache__/
 data/all.con
 *.fasta
 test.py
+*.ipynb

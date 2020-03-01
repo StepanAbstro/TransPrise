@@ -19,7 +19,7 @@ dataset.sequences(tss_array=TSS, dna_seq='./data/all.con', split=split, new_path
 # read all.con file (DNA-seq data) and save 4 new files: train_seq.fa, train_tss_pos.fa, test_seq.fa, test_tss_pos.fa
 
 
-dataset.beyond_genes(tss_array=TSS, dna_seq='./data/all.con', split=split, examples_train=10000, examples_test=500,
+dataset.beyond_genes(tss_array=TSS, dna_seq='./data/all.con', split=split, examples_train=15000, examples_test=1000,
                      new_path='./data/', nucleotides=512, distance=2000)
 # read all.con file (DNA_seq data) and save 2 new files with 10k examples of beyond genes space sequences:
 # train_nogenes_seqs.fa, test_nogenes_seqs.fa
@@ -28,14 +28,13 @@ t1 = time.time()
 # !!! 1.2 Dataset for classification
 train_set, train_answers = dataset.class_assemble(sequences='./data/train_sequences.fa',
                                                   beyond_genes_seqs='./data/train_nogenes_seqs.fa',
-                                                  tss_pos='./data/train_tss_pos.fa', examples=20000, length=512,
-                                                  min_pos=50, max_pos=462, features=['CA', 'CG'], skews=['CG'],
-                                                  tata=True)
+                                                  tss_pos='./data/train_tss_pos.fa', examples=60000, length=512,
+                                                  min_pos=250, max_pos=450)
 
 test_set, test_answers = dataset.class_assemble(sequences='./data/test_sequences.fa',
                                                 beyond_genes_seqs='./data/test_nogenes_seqs.fa',
-                                                tss_pos='./data/test_tss_pos.fa', examples=500, length=512, min_pos=50,
-                                                max_pos=462, features=['CA', 'CG'], skews=['CG'], tata=True)
+                                                tss_pos='./data/test_tss_pos.fa', examples=4000, length=512,
+                                                min_pos=250, max_pos=450)
 
 np.save('./data/train_class_set', train_set)
 np.save('./data/train_class_answers', train_answers)
@@ -45,13 +44,12 @@ np.save('./data/test_class_answers', test_answers)
 t2 = time.time()
 # !!! 1.3 Dataset for regression
 train_set, train_answers = dataset.regr_assemble(sequences='./data/train_sequences.fa',
-                                                 tss_pos='./data/train_tss_pos.fa', examples=30000, length=512,
-                                                 min_pos=50, max_pos=462, features=['CA', 'CG'], skews=['CG'],
-                                                 tata=True)
+                                                 tss_pos='./data/train_tss_pos.fa', examples=40000, length=512,
+                                                 min_pos=250, max_pos=450)
 
 test_set, test_answers = dataset.regr_assemble(sequences='./data/test_sequences.fa',
-                                               tss_pos='./data/test_tss_pos.fa', examples=500, length=512, min_pos=50,
-                                               max_pos=462, features=['CA', 'CG'], skews=['CG'], tata=True)
+                                               tss_pos='./data/test_tss_pos.fa', examples=1000, length=512,
+                                               min_pos=250, max_pos=450)
 
 np.save('./data/train_regr_set', train_set)
 np.save('./data/train_regr_answers', train_answers)
@@ -68,7 +66,7 @@ train_set = np.load('./data/train_class_set.npy')
 train_answers = np.load('./data/train_class_answers.npy')
 
 model = models.classification_model(train_set[0].shape)
-model.fit(train_set, train_answers, batch_size=128, epochs=10, verbose=2, validation_split=0.1)
+model.fit(train_set, train_answers, batch_size=64, epochs=5, verbose=2, validation_split=0.1)
 
 test_set = np.load('./data/test_class_set.npy')
 test_answers = np.load('./data/test_class_answers.npy')
@@ -87,7 +85,7 @@ train_set = np.load('./data/train_regr_set.npy')
 train_answers = np.load('./data/train_regr_answers.npy')
 
 model = models.regression_model(train_set[0].shape)
-model.fit(train_set, train_answers, batch_size=128, epochs=10, verbose=2, validation_split=0.1)
+model.fit(train_set, train_answers, batch_size=64, epochs=5, verbose=2, validation_split=0.1)
 
 test_set = np.load('./data/test_regr_set.npy')
 test_answers = np.load('./data/test_regr_answers.npy')

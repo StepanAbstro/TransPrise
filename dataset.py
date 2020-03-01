@@ -289,8 +289,8 @@ def class_assemble(sequences, beyond_genes_seqs, tss_pos, examples, length, min_
     :param tss_pos: path to file with tss positions data (tss_pos.fa)
     :param examples: how many examples will be created? must be //2 = 0
     :param length: length of examples in dataset, must be less then length of sequences
-    :param min_pos: minimal position of TSS in example (for example 50 with 512 length)
-    :param max_pos: maximal position of TSS in example (for example 462 with 512 length)
+    :param min_pos: min position of TSS in example (for example 50 with 512 length)
+    :param max_pos: max position of TSS in example (for example 462 with 512 length)
     :param features: nucleotide features in dataset? (for example CG, CA, ATG and other)
     :param skews: skew in dataset? (for example CG)
     :param tata: TATAbox feature in dataset?

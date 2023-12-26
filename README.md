@@ -1,3 +1,5 @@
+[Paper](https://peerj.com/articles/7990/)
+
 # TransPrise
 A deep learning approach for precise prediction of eukaryotic transcription start sites. Our approach offers significant improvement over existing promoter prediction methods. We provide the full basis for the comparison and encourage users to freely access our computational method to facilitate and streamline their own analyses
 
